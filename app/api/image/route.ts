@@ -1,12 +1,9 @@
 import { checkApiLimit, increaseApiLimit } from '@/lib/apiLimit';
+import { openai } from '@/lib/openai';
+import { translate } from '@/lib/papago';
 import { checkSubscription } from '@/lib/subscription';
 import { auth } from '@clerk/nextjs';
 import { NextResponse } from 'next/server';
-import OpenAI from 'openai';
-
-const openai = new OpenAI({
-	apiKey: process.env.OPENAI_API_KEY,
-});
 
 export async function POST(req: Request) {
 	try {
@@ -39,8 +36,10 @@ export async function POST(req: Request) {
 			return new NextResponse('Free trial has expired', { status: 403 });
 		}
 
+		const translatedPrompt = await translate(prompt);
+
 		const response = await openai.images.generate({
-			prompt,
+			prompt: translatedPrompt,
 			n: parseInt(amount, 10),
 			size: resolution,
 		});

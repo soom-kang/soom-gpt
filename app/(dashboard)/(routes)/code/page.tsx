@@ -4,9 +4,7 @@ import * as z from 'zod';
 import axios from 'axios';
 import Heading from '@/components/Heading';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Code } from 'lucide-react';
 import { useForm } from 'react-hook-form';
-import { formSchema } from './constants';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -15,17 +13,22 @@ import { useState } from 'react';
 import { Empty } from '@/components/Empty';
 import { Loader } from '@/components/Loader';
 import { cn } from '@/lib/utils';
-import UserAvatar from '@/components/UserAvatar';
-import BotAvatar from '@/components/BotAvatar';
+import { UserAvatar, BotAvatar } from '@/components/avatar';
 import ReactMarkDown from 'react-markdown';
 import OpenAI from 'openai';
 import { useProModal } from '@/hooks/useProModal';
 import toast from 'react-hot-toast';
+import { TOOLS } from '@/constants';
+
+const formSchema = z.object({
+	prompt: z.string().min(1, { message: 'Prompt is required' }),
+});
 
 export default function CodePage() {
 	const proModal = useProModal();
 	const router = useRouter();
 	const [messages, setMessages] = useState<OpenAI.Chat.ChatCompletionMessage[]>([]);
+
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -62,20 +65,22 @@ export default function CodePage() {
 
 	return (
 		<div>
+			{/* headers */}
 			<Heading
-				title='Code Generation'
-				description='Generate code using descriptive text.'
-				icon={Code}
-				iconColor='text-green-700'
-				bgColor='bg-green-700/10'
+				title={TOOLS[3].label}
+				description={TOOLS[3].description}
+				icon={TOOLS[3].icon}
+				iconColor={TOOLS[3].color}
+				bgColor={TOOLS[3].bgColor}
 			/>
 
+			{/* form */}
 			<div className='px-4 lg:px-8'>
 				<div>
 					<Form {...form}>
 						<form
 							onSubmit={form.handleSubmit(onSubmit)}
-							className='grid w-full grid-cols-12 gap-2 p-4 px-3 border rounded-lg md:px-6 focus-within:shadow-sm'
+							className='w-full p-4 px-3 border rounded-lg grid grid-cols-12 gap-2 md:px-6 focus-within:shadow-sm'
 						>
 							<FormField
 								name='prompt'
@@ -85,30 +90,34 @@ export default function CodePage() {
 											<Input
 												className='border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent'
 												disabled={isLoading}
-												placeholder='Simple toggle button using react hooks.'
+												placeholder={TOOLS[3].placeholder}
 												{...field}
 											/>
 										</FormControl>
 									</FormItem>
 								)}
 							/>
+
 							<Button className='w-full col-span-12 lg:col-span-2' disabled={isLoading}>
-								Generate
+								생성하기
 							</Button>
 						</form>
 					</Form>
 				</div>
+
 				<div className='mt-4 space-y-4'>
 					{isLoading && (
 						<div className='flex items-center justify-center w-full p-8 rounded-lg bg-muted'>
 							<Loader />
 						</div>
 					)}
+
 					{messages.length === 0 && !isLoading && (
 						<div>
-							<Empty label={'No Conversation started.'} />
+							<Empty label={TOOLS[3].empty!} />
 						</div>
 					)}
+
 					<div className='flex flex-col-reverse gap-y-4'>
 						{messages.map((message) => (
 							<div

@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Card, CardContent } from './ui/card';
+import { Card, CardContent } from '@/components/ui/card';
+import SubscriptionButton from '@/components/SubscriptionButton';
 import { MAX_FREE_COUNTS } from '@/constants';
-import { Progress } from './ui/progress';
-import { Button } from './ui/button';
-import { Zap } from 'lucide-react';
-import { useProModal } from '@/hooks/useProModal';
+import { Progress } from '@/components/ui/progress';
 
 interface FreeCounterProps {
 	apiLimitCount: number;
@@ -12,7 +10,6 @@ interface FreeCounterProps {
 }
 
 const FreeCounter = ({ apiLimitCount = 0, isPro = false }: FreeCounterProps) => {
-	const proModal = useProModal();
 	const [mounted, setMounted] = useState(false);
 
 	useEffect(() => {
@@ -31,13 +28,10 @@ const FreeCounter = ({ apiLimitCount = 0, isPro = false }: FreeCounterProps) => 
 				<CardContent className='py-6'>
 					<div className='mb-4 space-y-2 text-sm text-center text-white'>
 						<p>
-							{apiLimitCount} / {MAX_FREE_COUNTS} Free Generations
+							{apiLimitCount} / {MAX_FREE_COUNTS} 무료 생성 횟수
 						</p>
 						<Progress className='h-3' value={(apiLimitCount / MAX_FREE_COUNTS) * 100} />
-						<Button onClick={proModal.onOpen} className='w-full' variant={'premium'}>
-							Upgrade
-							<Zap className='w-4 h-4 ml-2 fill-white' />
-						</Button>
+						<SubscriptionButton isPro={isPro} />
 					</div>
 				</CardContent>
 			</Card>

@@ -6,28 +6,10 @@ import Logo from '@/assets/logo.png';
 import { usePathname } from 'next/navigation';
 import { Montserrat } from 'next/font/google';
 import { cn } from '@/lib/utils';
-import {
-	CodeIcon,
-	ImageIcon,
-	LayoutDashboard,
-	MessageSquare,
-	MusicIcon,
-	Settings,
-	VideoIcon,
-} from 'lucide-react';
-import FreeCounter from './FreeCounter';
+import FreeCounter from '../subscription/FreeCounter';
+import { TOOLS } from '@/constants';
 
 const montserrat = Montserrat({ weight: '600', subsets: ['latin'] });
-
-const routes = [
-	{ label: 'Dashboard', icon: LayoutDashboard, href: '/dashboard', color: 'text-sky-500' },
-	{ label: 'Conversation', icon: MessageSquare, href: '/conversation', color: 'text-violet-500' },
-	{ label: 'Image Generation', icon: ImageIcon, href: '/image', color: 'text-pink-700' },
-	{ label: 'Video Generation', icon: VideoIcon, href: '/video', color: 'text-orange-700' },
-	{ label: 'Music Generation', icon: MusicIcon, href: '/music', color: 'text-emerald-500' },
-	{ label: 'Code Generation', icon: CodeIcon, href: '/code', color: 'text-green-700' },
-	{ label: 'Settings', icon: Settings, href: '/settings' },
-];
 
 interface SidebarProps {
 	apiLimitCount: number;
@@ -47,7 +29,7 @@ const Sidebar = ({ apiLimitCount = 0, isPro = false }: SidebarProps) => {
 				</Link>
 
 				<div className='space-y-1'>
-					{routes.map((route) => (
+					{TOOLS.map((route) => (
 						<Link
 							href={route.href}
 							key={route.href}

@@ -1,12 +1,11 @@
-import Navbar from '@/components/Navbar';
-import Sidebar from '@/components/Sidebar';
+import { Sidebar, Navbar } from '@/components/sidebar/';
 import { getApiLimitCount } from '@/lib/apiLimit';
 import { checkSubscription } from '@/lib/subscription';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-	title: 'SOOM-GPT:Dashboard',
-	description: 'AI Platform',
+	title: 'SOOM-GPT | 대시보드',
+	description: '통합 AI 플랫폼 - 대시보드',
 };
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -20,7 +19,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
 			</div>
 
 			<main className='md:pl-72'>
-				<Navbar /> {children}
+				<Navbar apiLimitCount={apiLimitCount} isPro={isPro} /> {children}
 			</main>
 		</div>
 	);

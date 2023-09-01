@@ -1,19 +1,8 @@
 import { checkApiLimit, increaseApiLimit } from '@/lib/apiLimit';
+import { openai } from '@/lib/openai';
 import { checkSubscription } from '@/lib/subscription';
-
 import { auth } from '@clerk/nextjs';
 import { NextResponse } from 'next/server';
-import OpenAI from 'openai';
-
-const openai = new OpenAI({
-	apiKey: process.env.OPENAI_API_KEY,
-});
-
-const instructionMessage: OpenAI.Chat.ChatCompletionMessage = {
-	role: 'system',
-	content:
-		'You are a code generator. You must answer only in markdown code snippets. Use code comments for explanations.',
-};
 
 export async function POST(req: Request) {
 	try {
@@ -42,7 +31,17 @@ export async function POST(req: Request) {
 
 		const response = await openai.chat.completions.create({
 			model: 'gpt-3.5-turbo',
-			messages: [instructionMessage, ...messages],
+			temperature: 0.8,
+			n: 1,
+			stream: false,
+			messages: [
+				{
+					role: 'system',
+					content:
+						'You are a code generator. You must answer only in markdown code snippets. Use code comments for explanations. Last but not least, always answering in Korean.',
+				},
+				...messages,
+			],
 		});
 
 		if (!isPro) {

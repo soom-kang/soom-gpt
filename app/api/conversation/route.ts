@@ -1,12 +1,8 @@
 import { checkApiLimit, increaseApiLimit } from '@/lib/apiLimit';
+import { openai } from '@/lib/openai';
 import { checkSubscription } from '@/lib/subscription';
 import { auth } from '@clerk/nextjs';
 import { NextResponse } from 'next/server';
-import OpenAI from 'openai';
-
-const openai = new OpenAI({
-	apiKey: process.env.OPENAI_API_KEY,
-});
 
 export async function POST(req: Request) {
 	try {
@@ -35,7 +31,16 @@ export async function POST(req: Request) {
 
 		const response = await openai.chat.completions.create({
 			model: 'gpt-3.5-turbo',
-			messages,
+			temperature: 0.8,
+			n: 1,
+			stream: false,
+			messages: [
+				{
+					role: 'system',
+					content: 'Always answering in Korean.',
+				},
+				...messages,
+			],
 		});
 
 		if (!isPro) {

@@ -14,8 +14,6 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Empty } from '@/components/Empty';
 import { Loader } from '@/components/Loader';
-import { cn } from '@/lib/utils';
-
 import {
 	Select,
 	SelectItem,
@@ -27,6 +25,7 @@ import { Card, CardFooter } from '@/components/ui/card';
 import Image from 'next/image';
 import { useProModal } from '@/hooks/useProModal';
 import toast from 'react-hot-toast';
+import { TOOLS } from '@/constants';
 
 export default function ImagePage() {
 	const proModal = useProModal();
@@ -48,7 +47,6 @@ export default function ImagePage() {
 			setImages([]);
 
 			const response = await axios.post('/api/image', values);
-
 			const urls = response.data.map((image: { url: string }) => image.url);
 
 			setImages(urls);
@@ -67,14 +65,16 @@ export default function ImagePage() {
 
 	return (
 		<div>
+			{/* header */}
 			<Heading
-				title='Image Generation'
-				description='Turn your prompt into an image'
-				icon={ImageIcon}
-				iconColor='text-pink-700'
-				bgColor='bg-pink-700/10'
+				title={TOOLS[2].label}
+				description={TOOLS[2].description}
+				icon={TOOLS[2].icon}
+				iconColor={TOOLS[2].color}
+				bgColor={TOOLS[2].bgColor}
 			/>
 
+			{/* form */}
 			<div className='px-4 lg:px-8'>
 				<div>
 					<Form {...form}>
@@ -90,13 +90,14 @@ export default function ImagePage() {
 											<Input
 												className='border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent'
 												disabled={isLoading}
-												placeholder='A picture of a horse in Swiss alps'
+												placeholder={TOOLS[2].placeholder}
 												{...field}
 											/>
 										</FormControl>
 									</FormItem>
 								)}
 							/>
+
 							{/* amount */}
 							<FormField
 								control={form.control}
@@ -156,33 +157,42 @@ export default function ImagePage() {
 									</FormItem>
 								)}
 							/>
+
 							{/* button */}
-							<Button className='w-full col-span-12 lg:col-span-5' disabled={isLoading}>
-								Generate
+							<Button className='w-full col-span-12 lg:col-span-2' disabled={isLoading}>
+								생성하기
 							</Button>
 						</form>
 					</Form>
 				</div>
+
+				{/* result */}
 				<div className='mt-4 space-y-4'>
+					{/* Loading */}
 					{isLoading && (
-						<div className='p-20'>
+						<div className='flex items-center justify-center w-full p-8 rounded-lg bg-muted'>
 							<Loader />
 						</div>
 					)}
+
+					{/* Empty */}
 					{images.length === 0 && !isLoading && (
 						<div>
-							<Empty label={'No Conversation started.'} />
+							<Empty label={TOOLS[2].empty!} />
 						</div>
 					)}
+
+					{/* answer */}
 					<div className='grid grid-cols-1 gap-4 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
 						{images.map((src) => (
 							<Card key={src} className='overflow-hidden rounded-lg'>
 								<div className='relative aspect-square'>
 									<Image alt='Image' fill src={src} />
 								</div>
+
 								<CardFooter className='p-2'>
 									<Button onClick={() => window.open(src)} variant={'secondary'} className='w-full'>
-										<Download className='w-4 h-4 mr-2' /> Download
+										<Download className='w-4 h-4 mr-2' /> 저장하기
 									</Button>
 								</CardFooter>
 							</Card>

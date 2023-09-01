@@ -8,7 +8,7 @@ export const Loader = () => {
 				<Image alt='logo' fill src={LogoImage} />
 			</div>
 
-			<p className='text-sm text-muted-foreground'>SOOM-GPT is Thinking...</p>
+			<p className='text-sm text-muted-foreground'>SOOM-GPT 가 답변을 생각중입니다...</p>
 		</div>
 	);
 };

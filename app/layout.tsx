@@ -1,23 +1,24 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { ClerkProvider } from '@clerk/nextjs';
-import { Inter } from 'next/font/google';
-import ModalProvider from '@/components/ModalProvider';
-import ToasterProvider from '@/components/ToasterProvider';
-import CrispProvider from '@/components/CrispProvider';
+import { Noto_Sans_KR } from 'next/font/google';
+import ModalProvider from '@/components/modal/ModalProvider';
+import ToasterProvider from '@/components/toaster/ToasterProvider';
+import CrispProvider from '@/components/chat/CrispProvider';
 
-const inter = Inter({ subsets: ['latin'] });
+const noto = Noto_Sans_KR({ weight: ['300', '400', '700', '900'], subsets: ['latin'] });
 
 export const metadata: Metadata = {
 	title: 'SOOM-GPT',
-	description: 'AI Platform',
+	description: '통합 AI 플랫폼',
+	icons: '',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<ClerkProvider>
-			<html lang='en'>
-				<body className={inter.className}>
+			<html lang='ko'>
+				<body className={noto.className}>
 					<ModalProvider />
 					<ToasterProvider />
 					<CrispProvider />

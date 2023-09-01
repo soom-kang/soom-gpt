@@ -4,9 +4,7 @@ import * as z from 'zod';
 import axios from 'axios';
 import Heading from '@/components/Heading';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { MessageSquare } from 'lucide-react';
 import { useForm } from 'react-hook-form';
-import { formSchema } from './constants';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -16,15 +14,20 @@ import OpenAI from 'openai';
 import { Empty } from '@/components/Empty';
 import { Loader } from '@/components/Loader';
 import { cn } from '@/lib/utils';
-import UserAvatar from '@/components/UserAvatar';
-import BotAvatar from '@/components/BotAvatar';
+import { BotAvatar, UserAvatar } from '@/components/avatar/';
 import { useProModal } from '@/hooks/useProModal';
 import { toast } from 'react-hot-toast';
+import { TOOLS } from '@/constants';
+
+const formSchema = z.object({
+	prompt: z.string().min(1, { message: 'Prompt is required' }),
+});
 
 export default function ConversationPage() {
 	const proModal = useProModal();
 	const router = useRouter();
 	const [messages, setMessages] = useState<OpenAI.Chat.ChatCompletionMessage[]>([]);
+
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -33,6 +36,7 @@ export default function ConversationPage() {
 	});
 
 	const isLoading = form.formState.isSubmitting;
+
 	const onSubmit = async (values: z.infer<typeof formSchema>) => {
 		try {
 			const userMessage: OpenAI.Chat.ChatCompletionMessage = {
@@ -55,21 +59,22 @@ export default function ConversationPage() {
 				toast.error('Something went wrong');
 			}
 		} finally {
-			// rehydrated
 			router.refresh();
 		}
 	};
 
 	return (
 		<div>
+			{/* header */}
 			<Heading
-				title='Conversation'
-				description='Out most advanced conversation model.'
-				icon={MessageSquare}
-				iconColor='text-violet-500'
-				bgColor='bg-violet-500/10'
+				title={TOOLS[1].label}
+				description={TOOLS[1].description}
+				icon={TOOLS[1].icon}
+				iconColor={TOOLS[1].color}
+				bgColor={TOOLS[1].bgColor}
 			/>
 
+			{/* form */}
 			<div className='px-4 lg:px-8'>
 				<div>
 					<Form {...form}>
@@ -85,7 +90,7 @@ export default function ConversationPage() {
 											<Input
 												className='border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent'
 												disabled={isLoading}
-												placeholder='How do I  calculate the radius of a circle?'
+												placeholder={TOOLS[1].placeholder}
 												{...field}
 											/>
 										</FormControl>
@@ -93,22 +98,29 @@ export default function ConversationPage() {
 								)}
 							/>
 							<Button className='w-full col-span-12 lg:col-span-2' disabled={isLoading}>
-								Generate
+								대화하기
 							</Button>
 						</form>
 					</Form>
 				</div>
+
+				{/* result */}
 				<div className='mt-4 space-y-4'>
+					{/* loading */}
 					{isLoading && (
 						<div className='flex items-center justify-center w-full p-8 rounded-lg bg-muted'>
 							<Loader />
 						</div>
 					)}
+
+					{/* empty */}
 					{messages.length === 0 && !isLoading && (
 						<div>
-							<Empty label={'No Conversation started.'} />
+							<Empty label={TOOLS[1].empty!} />
 						</div>
 					)}
+
+					{/* answer */}
 					<div className='flex flex-col-reverse gap-y-4'>
 						{messages.map((message) => (
 							<div

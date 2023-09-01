@@ -11,7 +11,7 @@ export const Empty = ({ label }: EmptyProps) => {
 			<div className='relative h-72 w-72'>
 				<Image alt='Empty' src={EmptyImage} fill />
 			</div>
-			<p className='text-sm text-center text-muted-foreground'></p>
+			<p className='text-sm text-center text-muted-foreground whitespace-pre-line'>{label}</p>
 		</div>
 	);
 };

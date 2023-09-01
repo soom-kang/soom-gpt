@@ -40,12 +40,12 @@ export async function GET() {
 			line_items: [
 				{
 					price_data: {
-						currency: 'USD',
+						currency: 'KRW',
 						product_data: {
 							name: 'SOOM-GPT Pro',
-							description: 'Unlimited AI Generations',
+							description: '무제한 AI 사용',
 						},
-						unit_amount: 1000,
+						unit_amount: 20000,
 						recurring: {
 							interval: 'month',
 						},
