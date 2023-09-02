@@ -27,7 +27,6 @@ const SubscriptionButton = ({
 			window.location.href = response.data.url;
 		} catch (error: any) {
 			toast.error('Something went wrong');
-			console.error(error.message);
 		} finally {
 			setLoading(false);
 		}

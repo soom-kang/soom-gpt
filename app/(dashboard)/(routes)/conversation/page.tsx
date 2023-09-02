@@ -10,7 +10,6 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import OpenAI from 'openai';
 import { Empty } from '@/components/Empty';
 import { Loader } from '@/components/Loader';
 import { cn } from '@/lib/utils';
@@ -18,6 +17,7 @@ import { BotAvatar, UserAvatar } from '@/components/avatar/';
 import { useProModal } from '@/hooks/useProModal';
 import { toast } from 'react-hot-toast';
 import { TOOLS } from '@/constants';
+import { ChatCompletionMessage } from '@/lib/openai';
 
 const formSchema = z.object({
 	prompt: z.string().min(1, { message: 'Prompt is required' }),
@@ -26,7 +26,7 @@ const formSchema = z.object({
 export default function ConversationPage() {
 	const proModal = useProModal();
 	const router = useRouter();
-	const [messages, setMessages] = useState<OpenAI.Chat.ChatCompletionMessage[]>([]);
+	const [messages, setMessages] = useState<ChatCompletionMessage[]>([]);
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -39,7 +39,7 @@ export default function ConversationPage() {
 
 	const onSubmit = async (values: z.infer<typeof formSchema>) => {
 		try {
-			const userMessage: OpenAI.Chat.ChatCompletionMessage = {
+			const userMessage: ChatCompletionMessage = {
 				role: 'user',
 				content: values.prompt,
 			};
@@ -57,7 +57,6 @@ export default function ConversationPage() {
 				proModal.onOpen();
 			} else {
 				toast.error('Something went wrong');
-				console.error(error.message);
 			}
 		} finally {
 			router.refresh();

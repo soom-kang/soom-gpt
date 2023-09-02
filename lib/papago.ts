@@ -3,7 +3,7 @@ import qs from 'querystring';
 const CLIENT_ID = process.env.PAPAGO_CLIENT_ID;
 const CLIENT_SECRET = process.env.PAPAGO_CLIENT_SECRET;
 
-export const translate = async (prompt: string) => {
+export const translate = async (prompt: string): Promise<string> => {
 	if (!prompt) {
 		throw new Error('Search term should be provided as lookup arguments');
 	}

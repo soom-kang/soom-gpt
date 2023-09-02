@@ -48,7 +48,6 @@ export default function VideoPage() {
 				proModal.onOpen();
 			} else {
 				toast.error('Something went wrong');
-				console.error(error.message);
 			}
 		} finally {
 			router.refresh();

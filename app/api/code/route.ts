@@ -1,5 +1,5 @@
 import { checkApiLimit, increaseApiLimit } from '@/lib/apiLimit';
-import { openai } from '@/lib/openai';
+import { ChatCompletionMessage, openai } from '@/lib/openai';
 import { translate } from '@/lib/papago';
 import { checkSubscription } from '@/lib/subscription';
 import { auth } from '@clerk/nextjs';
@@ -30,7 +30,12 @@ export async function POST(req: Request) {
 			return new NextResponse('Free trial has expired', { status: 403 });
 		}
 
-		const translatedMessages = await translate(messages);
+		const translatedMessages: ChatCompletionMessage[] = [
+			{
+				role: 'user',
+				content: await translate(messages[0].content),
+			},
+		];
 
 		const response = await openai.chat.completions.create({
 			model: 'gpt-3.5-turbo',
