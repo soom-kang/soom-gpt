@@ -9,7 +9,7 @@ export async function POST(req: Request) {
 	try {
 		const { userId } = auth();
 		const body = await req.json();
-		const { messages } = body;
+		const { messages }: { messages: ChatCompletionMessage[] } = body;
 
 		if (!userId) {
 			return new NextResponse('Unauthorized', { status: 401 });
@@ -30,12 +30,21 @@ export async function POST(req: Request) {
 			return new NextResponse('Free trial has expired', { status: 403 });
 		}
 
-		const translatedMessages: ChatCompletionMessage[] = [
-			{
-				role: 'user',
-				content: await translate(messages[0].content),
-			},
-		];
+		const translatedMessages = Promise.all(
+			messages.map(async (message, idx) => {
+				const last = messages.length - 1;
+
+				if (idx === last)
+					return {
+						role: message.role,
+						content: await translate(message.content!),
+					};
+				else return message;
+			})
+		);
+
+		// console.log('메세지:', messages);
+		// console.log('번역 메세지', await translatedMessages);
 
 		const response = await openai.chat.completions.create({
 			model: 'gpt-3.5-turbo',
@@ -46,9 +55,9 @@ export async function POST(req: Request) {
 				{
 					role: 'system',
 					content:
-						'You are a code generator. You must answer only in markdown code snippets. Use code comments for explanations. Last but not least, always answering in Korean.',
+						'You are a code generator. You must answer only in markdown code snippets. Use code comments for explanations. Last but not least, always answer in Korean.',
 				},
-				...translatedMessages,
+				...(await translatedMessages),
 			],
 		});
 

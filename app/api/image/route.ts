@@ -38,6 +38,8 @@ export async function POST(req: Request) {
 
 		const translatedPrompt = await translate(prompt);
 
+		// console.log(translatedPrompt);
+
 		const response = await openai.images.generate({
 			prompt: translatedPrompt,
 			n: parseInt(amount, 10),
