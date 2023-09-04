@@ -8,6 +8,8 @@ export async function POST(req: Request) {
 	const body = await req.text();
 	const signature = headers().get('Stripe-Signature') as string;
 
+	// console.log('시그니처', signature);
+
 	let event: Stripe.Event;
 
 	try {
@@ -15,6 +17,8 @@ export async function POST(req: Request) {
 	} catch (error: any) {
 		return new NextResponse(`Webhook Error: ${error.message}`, { status: 400 });
 	}
+
+	// console.log('이벤트', event);
 
 	const session = event.data.object as Stripe.Checkout.Session;
 
