@@ -12,7 +12,20 @@ const noto = Noto_Sans_KR({ weight: ['300', '400', '700', '900'], subsets: ['lat
 export const metadata: Metadata = {
 	title: 'SOOM-GPT',
 	description: '통합 AI 플랫폼',
-	icons: '',
+	authors: { name: 'soom', url: 'https://github.com/soom-kang' },
+	openGraph: {
+		title: 'SOOM-GPT',
+		description: '통합 AI 플랫폼',
+		url: 'https://gpt.soom.today',
+		images: ['/logo.png'],
+	},
+	twitter: {
+		card: 'summary_large_image',
+		title: 'SOOM-GPT',
+		description: '통합 AI 플랫폼',
+		images: ['/logo.png'],
+	},
+	viewport: { width: 'device-width', initialScale: 1, userScalable: false },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

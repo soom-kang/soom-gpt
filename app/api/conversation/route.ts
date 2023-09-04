@@ -57,7 +57,7 @@ export async function POST(req: Request) {
 			messages: [
 				{
 					role: 'system',
-					content: 'Always answer in Korean.',
+					content: 'Your Name is SOOM-GPT. Always answer in Korean.',
 				},
 				...(await translatedMessages),
 			],

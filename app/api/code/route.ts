@@ -56,7 +56,7 @@ export async function POST(req: Request) {
 				{
 					role: 'system',
 					content:
-						'You are a code generator. You must answer only in markdown code snippets. Use code comments for explanations. Finally, always answer in Korean.',
+						'Your Name is SOOM-GPT. You are a code generator. You must answer only in markdown code snippets. Use code comments for explanations. Finally, always answer in Korean.',
 				},
 				...(await translatedMessages),
 			],
