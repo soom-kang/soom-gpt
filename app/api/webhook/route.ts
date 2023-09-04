@@ -6,19 +6,23 @@ import Stripe from 'stripe';
 
 export async function POST(req: Request) {
 	const body = await req.text();
-	const signature = headers().get('Stripe-Signature') as string;
+	// const signature = headers().get('stripe-signature')!;
+	const secret = process.env.STRIPE_WEBHOOK_SELECT!;
+	const header = stripe.webhooks.generateTestHeaderString({ payload: body, secret });
 
-	// console.log('시그니처', signature);
+	// console.log('시그니처', header);
+	// console.log('스트링', body);
+	// console.log('key', secret);
 
 	let event: Stripe.Event;
 
 	try {
-		event = stripe.webhooks.constructEvent(body, signature, process.env.STRIPE_WEBHOOK_SELECT!);
+		event = stripe.webhooks.constructEvent(body, header, secret);
 	} catch (error: any) {
 		return new NextResponse(`Webhook Error: ${error.message}`, { status: 400 });
 	}
 
-	// console.log('이벤트', event);
+	// console.log('이벤트', event.type, '|', event.account, '|', event.request);
 
 	const session = event.data.object as Stripe.Checkout.Session;
 
