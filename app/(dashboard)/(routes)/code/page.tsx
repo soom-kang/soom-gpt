@@ -43,6 +43,7 @@ export default function CodePage() {
 				role: 'user',
 				content: values.prompt,
 			};
+
 			const newMessages = [...messages, userMessage];
 
 			const response = await axios.post('/api/code', {
@@ -56,7 +57,7 @@ export default function CodePage() {
 			if (error?.response?.status === 403) {
 				proModal.onOpen();
 			} else {
-				toast.error('Something went wrong');
+				toast.error('시간 제한에 걸려 요청이 취소되었습니다');
 			}
 		} finally {
 			router.refresh();

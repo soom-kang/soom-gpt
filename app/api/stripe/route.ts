@@ -4,6 +4,8 @@ import { absoluteUrl } from '@/lib/utils';
 import { auth, currentUser } from '@clerk/nextjs';
 import { NextResponse } from 'next/server';
 
+export const preferredRegion = 'icn1';
+
 const settingsUrl = absoluteUrl('/settings');
 
 export async function GET() {

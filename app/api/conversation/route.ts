@@ -5,6 +5,9 @@ import { checkSubscription } from '@/lib/subscription';
 import { auth } from '@clerk/nextjs';
 import { NextResponse } from 'next/server';
 
+export const preferredRegion = 'icn1';
+// export const runtime = 'edge'; // 'nodejs' is the default
+
 export async function POST(req: Request) {
 	try {
 		const { userId } = auth();

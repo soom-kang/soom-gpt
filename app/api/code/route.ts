@@ -5,6 +5,8 @@ import { checkSubscription } from '@/lib/subscription';
 import { auth } from '@clerk/nextjs';
 import { NextResponse } from 'next/server';
 
+export const preferredRegion = 'icn1';
+
 export async function POST(req: Request) {
 	try {
 		const { userId } = auth();
@@ -43,8 +45,7 @@ export async function POST(req: Request) {
 			})
 		);
 
-		// console.log('메세지:', messages);
-		// console.log('번역 메세지', await translatedMessages);
+		console.log('메세지', messages, await translatedMessages);
 
 		const response = await openai.chat.completions.create({
 			model: 'gpt-3.5-turbo',
@@ -55,7 +56,7 @@ export async function POST(req: Request) {
 				{
 					role: 'system',
 					content:
-						'You are a code generator. You must answer only in markdown code snippets. Use code comments for explanations. Last but not least, always answer in Korean.',
+						'You are a code generator. You must answer only in markdown code snippets. Use code comments for explanations. Finally, always answer in Korean.',
 				},
 				...(await translatedMessages),
 			],

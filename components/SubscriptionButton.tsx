@@ -26,7 +26,7 @@ const SubscriptionButton = ({
 
 			window.location.href = response.data.url;
 		} catch (error: any) {
-			toast.error('Something went wrong');
+			toast.error('시간 제한에 걸려 요청이 취소되었습니다');
 		} finally {
 			setLoading(false);
 		}

@@ -4,6 +4,8 @@ import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
+export const preferredRegion = 'icn1';
+
 export async function POST(req: Request) {
 	const body = await req.text();
 	// const signature = headers().get('stripe-signature')!;
