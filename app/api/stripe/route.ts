@@ -43,7 +43,7 @@ export async function GET() {
 						currency: 'KRW',
 						product_data: {
 							name: 'SOOM-GPT Pro',
-							description: '무제한 AI 사용',
+							description: '무제한 AI 사용 구독',
 						},
 						unit_amount: 20000,
 						recurring: {

@@ -40,7 +40,7 @@ const SubscriptionButton = ({
 			disabled={loading}
 			className='w-full gap-2'
 		>
-			<span>{isPro ? 'Manage Subscription' : '업그레이드'}</span>
+			<span>{isPro ? '유료 구독 관리' : '업그레이드'}</span>
 			{!isPro && <Zap className='w-4 h-4 fill-white' />}
 		</Button>
 	);
