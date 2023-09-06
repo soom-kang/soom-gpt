@@ -18,16 +18,17 @@
   <img src="https://img.shields.io/badge/Replicate-000000?style=flat-square&logo=farfetch&logoColor=white"/>
   <img src="https://img.shields.io/badge/OpenAI-412991?style=flat-square&logo=openai&logoColor=white"/>
   <img src="https://img.shields.io/badge/Next.js-000000?style=flat-square&logo=Next%2Ejs&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Prisma-2D3748?style=flat-square&logo=prisma&logoColor=white"/>
+  <img src="https://img.shields.io/badge/PlanetScale-000000?style=flat-square&logo=planetscale&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Zustand-4D2B1A?style=flat-square&logo=Ameba&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Papago-2DB400?style=flat-square&logo=bower&logoColor=white"/>
   <img src="https://img.shields.io/badge/React Hook Form-EC5990?style=flat-square&logo=reacthookform&logoColor=white"/>
   <img src="https://img.shields.io/badge/Radix UI-161618?style=flat-square&logo=radixui&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Prisma-2D3748?style=flat-square&logo=prisma&logoColor=white"/>
   <img src="https://img.shields.io/badge/Axios-5A29E4?style=flat-square&logo=axios&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Papago-2DB400?style=flat-square&logo=bower&logoColor=white"/>
   <img src="https://img.shields.io/badge/Tailwind CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white"/>
   <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white"/>
   <img src="https://img.shields.io/badge/pnpm-F69220?style=flat-square&logo=pnpm&logoColor=white"/>
   <img src="https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white"/>
-  <img src="https://img.shields.io/badge/PlanetScale-000000?style=flat-square&logo=planetscale&logoColor=white"/>
 </p>
 
 > #### 주의 사항
