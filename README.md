@@ -29,6 +29,7 @@
   <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white"/>
   <img src="https://img.shields.io/badge/pnpm-F69220?style=flat-square&logo=pnpm&logoColor=white"/>
   <img src="https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white"/>
 </p>
 
 > #### 주의 사항
@@ -41,6 +42,7 @@
 >    결론적으로 포트폴리오 용이기 때문에 짧은 응답의 질문을 하는 것을 권장합니다.
 >
 > 2. 결재는 실제로 진행되지 않는 샘플이기 때문에 임의의 카드번호 (e.g. 4242-4242-4242-4242) 등을 입력해도 가상 결재 프로세스가 진행됩니다. 결재 후에는 ai 요청 limit이 풀린것을 확인할 수 있습니다. Abusing 발생 할 경우를 대비해 일정 이상의 반복된 요청은 블록이 진행됩니다.
+> 3. 현재 개발 환경 보존을 위해 컨테이너 정보를 Docker 폴더에 저장하였습니다. 개발 환경 접근은 `docker-compose.yml` 을 통해 진행할 수 있습니다.
 
 ---
 
